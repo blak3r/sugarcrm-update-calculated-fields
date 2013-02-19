@@ -32,9 +32,9 @@
 
 // See the readme for complete instructions
 // Modify the lines below
-
-$module = "Quotes"; // Set the module to update here.
-$filter = ""; // If you want to filter the records to update, specify it here.  See SugarBean->getFullList for docs on how to
+$module = "Quotes"; // Set the module where you calculated field is.
+$order_by = ""; //
+$where = ""; // If you want to filter the records to update, specify it here.  See SugarBean->getFullList for docs on how to
 
 // Here's the documentation on get_full_list from: http://apidocs.sugarcrm.com/api/6.2.4/ce/db_data_SugarBean.html
 //   get_full_list( string $order_by = "", string $where = "",  $check_dates = false, int $show_deleted = 0 ) : void
@@ -50,8 +50,8 @@ require_once('include/utils.php');
 require_once('include/export_utils.php');
 
 $cnt = 0;
-$moduleBean = BeanFactory::getBean("Quotes");
-$beanList = $moduleBean->get_full_list('',$filter);
+$moduleBean = BeanFactory::getBean($module);
+$beanList = $moduleBean->get_full_list($order_by,$where);
 if( $beanList != null ) {
     foreach($beanList as $b) {
         // These lines prevent the modified date and user from being changed.
