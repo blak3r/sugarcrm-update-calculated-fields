@@ -6,8 +6,9 @@ I used this to update a days since field was changed type field.
 
 
 1. Copy calcFieldsUpdater.php to somewhere in your /custom folder (example assumes you put it /custom/calcFieldsUpdater.php)
-2. Open /custom/include/MVC/Controller/entry_point_registry.php (create if doesn't exist)
-3. Add the following to it:
+2. Modify the top of the script to specify the module you want to run this for and an optional filter.
+3. Open /custom/include/MVC/Controller/entry_point_registry.php (create if doesn't exist)
+4. Add the following to it:
   ```
   $entry_point_registry['calcFieldsUpdater'] = array (
     'file' => 'custom/calcFieldsUpdater.php',
