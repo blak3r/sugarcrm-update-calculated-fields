@@ -3,7 +3,7 @@
  * Updated Calculated Fields Script
  * Project Home: https://github.com/blak3r/sugarcrm-update-calculated-fields/
  *
- * Parts of this code are (c) 2011 Blake Robertson http://www.blakerobertson.com
+ * Parts of this code are (c) 2013 Blake Robertson http://www.blakerobertson.com
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU General Public License version 3 as published by the
