@@ -19,5 +19,15 @@ I used this to update a days since field was changed type field.
 4. Create a scheduler of type url, specify https://<your_comain>/sugarcrm/index.php?entryPoint=calcFieldsUpdater
 5. Set the time for when you want it to run (such as once a night).
 
+## Blog Post
+For more information on how this can be used along with workflow rules see this blog post:
+<http://www.blakerobertson.com/devlog/2013/2/19/sugarcrm-update-calculated-fields-nightly.html>
+
+## Compatibility
+This will only work on on-site versions of Sugar until an installable module is created.  The process of doing so tends to 
+take way longer then this code took to write in the first place.  If someone wants to fund getting this turned into an installable module, please contact me through me here: <http://www.blakerobertson.com/contact> and I'll make it available to the community afterwards.  
+
+
+
 
 ![gitimg](https://gitimg.com/blak3r/sugarcrm-update-calculated-fields/README/track)
