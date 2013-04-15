@@ -49,18 +49,25 @@ die('Not A Valid Entry Point');
 require_once('include/utils.php');
 require_once('include/export_utils.php');
 
-$cnt = 0;
 $moduleBean = BeanFactory::getBean($module);
-$beanList = $moduleBean->get_full_list($order_by,$where);
-if( $beanList != null ) {
-    foreach($beanList as $b) {
-        // These lines prevent the modified date and user from being changed.
-        $b->update_date_modified = false;
-        $b->update_modified_by = false;
-        $b->tracker_visibility = false;
-        $b->save();
-        $cnt++;
-    }
-}
 
-print "Finished updating: $cnt records.";
+$page_length = 20;
+
+for ($offset = 0; true; $offset += $page_length) {
+    // Fetch paginated list part
+	$list = $moduleBean->get_list($order_by, $where, $offset, -1, $page_length);
+	if (count($list['list']) == 0) {
+		break;
+	}
+
+	foreach($list['list'] as $b) {
+		/** @var $b SugarBean */
+		// These lines prevent the modified date and user from being changed.
+		$b->update_date_modified = false;
+		$b->update_modified_by = false;
+		$b->tracker_visibility = false;
+		$b->save();
+	}
+};
+
+print "Finished updating: {$list['row_count']} records.";
