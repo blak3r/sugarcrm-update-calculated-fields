@@ -68,7 +68,6 @@ for ($offset = 0; true; $offset += $page_length) {
 		$b->tracker_visibility = false;
 		$b->fill_in_relationship_fields();
 		$b->in_workflow = true;
-		$b->updateCalculatedFields();
 		$b->save();
 	}
 };
