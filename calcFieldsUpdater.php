@@ -3,7 +3,7 @@
  * Updated Calculated Fields Script
  * Project Home: https://github.com/blak3r/sugarcrm-update-calculated-fields/
  *
- * Parts of this code are (c) 2013 Blake Robertson http://www.blakerobertson.com
+ * Parts of this code are (c) 2011 Blake Robertson http://www.blakerobertson.com
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU General Public License version 3 as published by the
@@ -30,9 +30,11 @@
  *
  */
 
+set_time_limit ( 600 ); // Allow to run for 600 seconds == 10 minutes
+
 // See the readme for complete instructions
 // Modify the lines below
-$module = "Quotes"; // Set the module where you calculated field is.
+$moduleList = array("Accounts", "Quotes"); // Set the module where you calculated field is.
 $order_by = ""; //
 $where = ""; // If you want to filter the records to update, specify it here.  See SugarBean->getFullList for docs on how to
 
@@ -49,27 +51,22 @@ die('Not A Valid Entry Point');
 require_once('include/utils.php');
 require_once('include/export_utils.php');
 
-$moduleBean = BeanFactory::getBean($module);
-
-$page_length = 20;
-
-for ($offset = 0; true; $offset += $page_length) {
-    // Fetch paginated list part
-	$list = $moduleBean->get_list($order_by, $where, $offset, -1, $page_length);
-	if (count($list['list']) == 0) {
-		break;
+foreach( $moduleList as $module) {
+	print "Updating $module...\n<br>";
+	$cnt = 0;
+	$moduleBean = BeanFactory::getBean($module);
+	$beanList = $moduleBean->get_full_list($order_by,$where);
+	if( $beanList != null ) {
+		foreach($beanList as $b) {
+			// These lines prevent the modified date and user from being changed.
+			$b->update_date_modified = false;
+			$b->update_modified_by = false;
+			$b->tracker_visibility = false;
+			$b->in_workflow = true;
+			$b->save();
+			$cnt++;
+		}
 	}
 
-	foreach($list['list'] as $b) {
-		/** @var $b SugarBean */
-		// These lines prevent the modified date and user from being changed.
-		$b->update_date_modified = false;
-		$b->update_modified_by = false;
-		$b->tracker_visibility = false;
-		$b->fill_in_relationship_fields();
-		$b->in_workflow = true;
-		$b->save();
-	}
-};
-
-print "Finished updating: {$list['row_count']} records.";
+	print "Finished updating: $cnt records.\n<br>";
+}
